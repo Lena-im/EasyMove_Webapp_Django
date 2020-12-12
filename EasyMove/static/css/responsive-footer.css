@@ -1,0 +1,75 @@
+footer{
+	background: #0d1b2a;
+	height: 6em;
+	color: #e0e1dd;
+}
+
+#leftFooter,
+#midFooter{
+	padding-top: 0.1em;
+	padding-left: 1em;
+}
+
+#midFooter > a {
+	margin-right: 0.1em;
+	margin-left: 0.1em;
+	color: #e0e1dd;
+}
+
+#rightFooter {
+	float: right;
+	position: relative;
+	top: -2.5em;
+	left: 0em;
+	padding-right: 0.2em;
+}
+
+#rightFooter > img {
+	padding-right: 0.6em; 
+	height: 2.3em;
+}
+
+
+@media all and (min-width: 376px) {
+	footer{
+		display: flex;
+		justify-content: space-between;/*left footer, middle footer and right footer should be in left, middle and right*/
+		height: 3em;
+	}
+
+	#leftFooter{
+		width: 15em;
+		display: flex;
+		align-self: center;
+		padding-left: 1.3em;
+		min-width: 20em;
+	}
+
+	#midFooter{
+		width: 25em;
+		display: flex;
+		align-self: center;
+		padding-left: 5em;
+		min-width: 40em
+	}
+
+	#midFooter > a {
+		margin-right: 0.5em;
+		margin-left: 0.5em;
+	}
+
+	#rightFooter {
+		position: static;
+		width: 4.8em;
+		display: flex;
+		align-self: center;
+		padding-right: 1.5em;
+
+	}
+
+	#rightFooter > img {
+		padding-left: 0.6em; 
+		height: 1.8em;
+
+	}
+}

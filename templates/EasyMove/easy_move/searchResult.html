@@ -1,0 +1,31 @@
+{% extends "EasyMove/base.html" %}
+{% load static %}
+{% block page-title %}{% endblock %}
+
+{% block css-file %}
+    <link rel="stylesheet" href="{% static "css/search-result.css" %}">
+{% endblock %}
+
+{% block content %}
+
+    {% if items|length == 0 %}
+            <h2>Sorry, there are matched items.</h2>
+        {% else %}
+            {% for item in items %}
+                {# iterate items and present in this page #}
+                <div id="resultItems">
+                    <a href="{% url "EasyMove:item-detail" item.id %}" class="itemBox" data-created-date="{{ item.date_posted }}">
+    	                <img src="{{ item.imgURL }}" alt="{{ item.title }}" />
+                    
+    	                <p class="price" data-item-price="{{ item.price }}">${{ item.price }}</p>
+                    
+    	                <p class="itemName">{{ item.title}}</p>
+    	                <p class="location">{{ item.location}}</p>
+    	    	        <p class="availability">{{ item.availability}}</p>
+    	            </a>
+                </div>
+
+            {% endfor %}
+        {% endif %}
+
+{% endblock %}

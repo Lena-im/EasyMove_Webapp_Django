@@ -1,0 +1,164 @@
+section{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	padding-top: 3em;
+}
+
+#history{
+	border: 0.1px solid #ccc;
+	background: #f1f1f1;
+	width: 30%;
+	height: 35em;
+}
+
+.message{
+	padding: 0.2em 0.1em;
+	border-bottom: 0.1em solid black;
+}
+
+.message > img {
+	height: 2em;
+	padding: 0.3em 0.5em;
+}
+
+.message > p {
+	display: none;
+}
+
+#chatPanel{
+	border: 0.1em solid #ccc;
+	border-left: none;
+	width: 120%;
+	height: 35em;
+
+}
+
+.messageContainer{
+	border:0.1em solid #dedede;
+	background: #f1f1f1;
+	border-radius: 0.5em;
+	margin:1em;
+	padding: 0.2em;
+
+	display: flex;
+	justify-content: flex-start;/*Message from other person should start from left*/
+}
+
+.messageContainer > img {
+	max-height: 2em;
+	margin-right: 0.5em;
+	padding: 0.3em;
+}
+
+.myView{
+	border:0.1em solid #dedede;
+	background: #f1f1f1;
+	border-radius: 0.5em;
+	padding: 0.2em;
+	margin:1em;
+
+	display: flex;
+	justify-content: flex-end;/*Message from my side should start from right*/
+}
+
+.myView > img {
+	max-height: 3em;
+	margin-left: 1em;
+}
+
+.editMessage{
+	position: relative;
+	top: 13em;
+	left: 0em;
+	height: 1.3em;
+	margin: 0em 2em;
+}
+
+.editMessage > form > img {
+	height: 2em;
+}
+
+.editMessage > form {
+	display: flex;
+	justify-content: flex-end;
+
+	margin-top: 3em;
+}
+
+.typeBox{
+	border:0.2em solid #dedede;
+	border-radius: 0.5em;
+	width: 45em;
+	margin-right: 1em;
+}
+
+@media all and (min-width: 376px) {
+	section{
+		padding: 1.5em 1.8em;
+	}
+
+	#history{
+		display: flex;
+		flex-direction: column;
+		max-width: 25em;
+		min-width: 20em;
+		height: 30em;
+	}
+
+	.message{
+		display: flex;
+		justify-content: flex-start;
+		padding: 1.2em 1.5em;
+		max-width: 25em;
+		min-width: 20em;
+		font-size: 0.8em;
+	}
+
+	.message:hover{
+		background-color:#999999;
+	}
+
+	.message > img {
+		height: 3em;
+		padding: 0.3em 1.0em;
+	}
+
+	.message > p {
+		display: block;
+	}
+
+	#chatPanel{
+		padding: 0 1.2em;
+		max-width: 75em;
+		width: 100%;
+		height: 30em;
+
+		display: flex;
+		flex-direction: column;
+	}
+
+	.messageContainer{
+		padding: 0.7em;
+		margin:2em;
+
+	}
+
+	.messageContainer > img {
+		max-height: 3em;
+		margin-right: 1em;
+	}
+
+	.myView{
+		padding: 1em;
+		margin:2em
+
+	}
+
+	.editMessage{
+		position: static;
+		height: 1.3em;
+		margin: 0em 2em;
+	}
+
+}

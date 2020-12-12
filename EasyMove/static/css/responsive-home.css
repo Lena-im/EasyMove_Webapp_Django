@@ -1,0 +1,249 @@
+section {
+	padding-top: 2em;
+	width: 100%
+}
+
+#welcomePage{
+	padding: 1.5em;
+	margin-top: 1.5em;
+	background: #f0efeb;
+}
+
+#welcome > h2 {
+	display: none;
+}
+
+#findLocation{
+	float: right;
+	position: relative;
+	top: -6.4em;
+	left: 0em;
+}
+
+#inputLocation{
+	outline: none;
+
+	display: flex;
+	width: 12em;
+	background-color: transparent;
+	border:0;
+	border-bottom: 0.2em solid black;
+	margin-bottom: 1em;
+}
+
+#updateLocation,
+#changeLocation{
+	padding: 0.3em 0.8em;
+	border: 0.16em solid black;
+	margin:0 0.3em 0.3em 0;
+	font-size: .8em;
+	box-sizing: border-box;
+	text-decoration: none;
+	outline: none;
+	font-family: 'Roboto', sans-serif;
+}
+
+#updateLocation:hover,
+#changeLocation:hover{
+	border-color:#a5a58d;
+	color:#a5a58d;
+}
+
+/*All the button have the same style*/
+#findLocation > form > input[type="text"] {
+	border-bottom: 0.2em solid black;
+	background: transparent;
+	outline: none;
+	width: 5em;
+	height: 1.4em;
+}
+
+#findLocation > form > input[type="submit"]{
+	border-bottom: 0.2em solid black;
+	background: transparent;
+	outline: none;
+	font-size: 1em;
+	margin-top: 0.3em;
+}
+
+
+#itemList {
+	padding-top: 1em;
+	width: 100%;
+}
+
+#sortTools{
+	position: relative;
+    top: -5em;
+	padding-left: 0.5em;
+}
+
+#deliverOptions{
+	float: left;
+	font-size: 1.3em;
+	padding-bottom: 0.5em;
+}
+
+#deliverOptions > label{
+	padding-right: 1.3em;
+}
+
+#deliverOptions > input{
+	height: 1.3em;
+	width: 1.3em;
+}
+
+#sortBy{
+	padding: 0.1em 6em;
+	border: 0.12em solid black;
+	font-size: 1.3em;
+	outline: none;
+}
+
+.itemBox > img {
+	height: 7em;
+	width: 7em;
+}
+
+#items {
+	padding: 0.5em 1.5em;
+	display: flex;
+	flex-wrap: wrap;/*wrap item so that the position of item is flaxible based on the browser window size*/
+	justify-content: space-around;
+}
+
+.itemBox > img {
+	height: 7em;
+	width: 7em;
+}
+
+.itemBox { /*Each item have a box which include image and all information*/
+	padding: 0.7em;
+	background: #f0efeb;
+	opacity: 0.95;
+	margin:0.5em;
+}
+
+.price{
+	font-weight: bold;
+	color: black;
+}
+
+.itemName{
+	font-size: 0.7em;
+	font-family: Georgia, serif;
+	color: black;
+}
+
+.location{
+	font-family: Georgia, serif;
+	font-size: 0.6em;
+	color: black;
+}
+
+
+
+@media all and (min-width: 376px) {
+	#section{
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+	}
+
+	#welcomePage{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-top: 1em;
+	}
+
+	#welcome{
+		margin-right: 2em;
+		margin-top: 2.5em;
+	}
+
+	#welcome > h2 {
+		display: block;
+	}
+
+	#findLocation{
+		position: static;
+		padding-left: 1.5em;
+		margin-top: 2em;
+	}
+
+	.divider{
+		margin-left: 3em;
+    	margin-right: 3em;
+    	height: 12em;
+	}
+
+	.recent-activity > ul > li{
+		padding: 0.3em 1em;
+	}
+
+	#itemList{
+		display: flex;
+		flex-direction: column;
+	}
+
+	#sortTools{
+		position: static;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 0.5em 4.5em;
+	}
+
+	#sortBy{
+		padding: 0.5em 4em;
+		font-size: 1em;
+	}
+
+
+	#items {
+		position: static;
+		padding: 0.5em 1.5em;
+	}
+
+
+	.itemBox > img {
+		height: 11.2em;
+		width: 11.2em;
+	}
+
+	.itemBox { /*Each item have a box which include image and all information*/
+		margin:2em;
+	}
+
+	.price{
+		font-weight: bold;
+		color: black;
+	}
+
+	.itemName{
+		font-size: 0.9em;
+	}
+
+	.location{
+		font-size: 0.8em;
+	}
+
+	.availability{
+		font-size:0.7em;
+		color: #999999;
+	}
+
+	#findLocation > form > input[type="text"] {
+	border-bottom: 0.2em solid black;
+	background: transparent;
+	outline: none;
+	width: 8em;
+	height: 1.4em;
+}
+
+	#findLocation > form > input[type="submit"]{
+		font-size: 1em;
+		margin-top: 0em;
+	}
+}

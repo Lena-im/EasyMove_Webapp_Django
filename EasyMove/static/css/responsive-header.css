@@ -1,0 +1,313 @@
+header{
+	background: #0d1b2a;
+	height: 7em;
+}
+
+#leftHeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
+#logo {
+	padding-top: 0.3em;
+	padding-left: 0.2em;
+	margin: 0.5em;
+}
+
+#logoText{
+	margin-bottom: 0.3em;
+	color: #e0e1dd;
+}
+
+#logoText > h1 {
+	font-size: 1.7em;
+}
+
+#logo > a > img {
+	height: 2em;
+}
+
+#logoText > h4 {
+	display: none;
+}
+
+#midHeader {
+	display: flex;
+	flex-direction: column; /*navigation bar below the search box*/
+	padding: 1.5em 4em 0em 1.5em;;
+}
+
+
+#searchForm > input[type="image"]{
+	height: 2.2em;
+	position: relative;
+	top: -0.2em;
+	left:0.2em;
+	outline: none;
+}
+
+
+#searchForm > input[type="text"]:focus{
+	outline: none;
+	background: transparent;
+	border: none;
+
+	color: white;
+}
+
+#searchForm{
+	position: relative;
+	top: -2.3em;
+	left: -0.5em;
+    padding-left: 0.2em;
+}
+
+#searchForm > button {
+	outline: none;
+	background-color: transparent;
+	border:none;
+}
+
+#searchBar {
+	width: 10em;
+	background-color: transparent;
+	border:0;
+	border-bottom: 0.2em solid #e0e1dd;
+}
+
+#category{
+	position: relative;
+	top: -1.2em;
+	left: -4em;
+}
+
+#category > ul{
+	list-style-type: none;
+	display: flex;
+	flex-direction: row;
+}
+
+#category > ul > li > a{
+	margin-right: 0.8em;
+	border: 1px solid #0d1b2a;
+	background:#0d1b2a;
+	color: #e0e1dd;
+	font-size: 0.8em;
+	padding: 0.5em 0.4em;
+
+}
+
+#category > ul > li > a:hover{
+	border-color:#cccccc;
+	background-color: #cccccc;
+	color:black;
+}
+
+#rightHeader{
+	float: right;
+	position: relative;
+	top: -10em;
+	left: -1.2em;
+}
+
+
+.menuIcon > img {
+	height: 1em;
+	margin-right: 2em;
+}
+
+
+#userIcon > a > img {
+	height: 3em;
+	padding-bottom: 0.3em;
+}
+
+#userInfo {
+	display: flex;
+	flex-direction: column;
+}
+
+#userInfo > a {
+	padding: 0.2em;
+	color: #e0e1dd;
+}
+
+#userIcon > img {
+	height: 3em;
+	padding-bottom: 0.3em;
+}
+
+#loginView {
+	color: #e0e1dd;
+}
+
+
+@media all and (min-width: 376px) {
+	header {
+		height: 7.5em;
+		display: flex;
+		justify-content: space-between;/*Three part of header should be in left, middle and right*/
+	}
+
+	#logo {
+		padding-left: 0.7em;
+		margin: 0.7em;
+	}
+
+	#logo > a > img {
+		height: 5em;
+		width: 5.6em;
+	}
+
+	#logoText{
+		padding-left: 0.3em;
+		margin-bottom: 0.3em;
+		color: #e0e1dd;
+	}
+
+	#logoText > h4 {
+		display: block;
+	}
+
+	#midHeader {
+		min-width: 25em;
+		padding: 2.5em 4em 0em 1.5em;;
+	}
+
+	#searchIcon{
+		height: 2em;
+	}
+
+	#searchForm{
+		position: static;
+		display: flex;
+	    justify-content: center;
+	    padding-left: 2.3em;
+	}
+
+	#searchBar {
+		display: flex;
+		width: 35em;
+	}
+
+	#category{
+		position: static;
+	}
+
+	#category > ul{
+		list-style-type: none;
+		display: flex;
+		flex-direction: row;
+	  	text-align: center;
+
+	}
+
+	#category > ul > li > a{
+		color: #e0e1dd;
+		border: none;
+		background:transparent;
+		font-size: 1em;
+		padding: 0;
+	}
+
+	#category > ul > li > a:hover{
+		color: #ee6c4d;
+		background: transparent;
+	}
+
+	#rightHeader{
+		position: static;
+		width: 20em;
+	  	display: flex;
+	  	justify-content: flex-end;
+	  	align-items: center;
+	  	padding-right: 1.2em;
+
+	}
+
+	.menuIcon{
+		position: absolute;
+	}
+
+	.menuIcon > img {
+		height: 2em;
+	}
+
+	nav.menu{
+		width: 10em;
+		background-color:#0d1b2a;
+		position: relative;
+		top: 12em;
+		left:5.5em;
+		transition: .3s all;
+		z-index: 1;
+	}
+
+	nav.menu > a {
+		display: block;
+		padding: 0.7em;
+		margin: 1.3em 0 0 0;
+		color:#e0e1dd;
+	}
+
+	nav.menu > a:hover{
+		background: #999999;
+	}
+
+	#userIcon > a > img {
+		padding-right: 1em;
+
+	}
+
+	#userInfo > a {
+		padding: 0.3em;
+		position: relative;
+		left: -6em;
+	}
+
+	#login{
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		left: -7em;
+		color:white;
+	}
+
+	#login > .input{
+		display: flex;
+		flex-direction: column;
+	}
+
+	#login > div > a{
+		color: #e0e1dd;
+		font-size: 0.9em;
+	}
+
+	#login > div > a:hover{
+		color: white;
+	}
+
+	#login > div > input[type="text"],
+	#login > div > input[type="password"]{
+		color:white;
+		border-bottom: 1px solid white;
+		border-right: none;
+		background: transparent;
+		outline: none;
+		width: 8.5em;
+		height: 1.4em;
+		margin-bottom: 0.3em;
+
+	}
+
+	#login > input[type="submit"]{
+		outline: none;
+		font-size: 1em;
+		margin: 0.3em;
+	}
+
+	#loginView {
+		padding: 1em;
+	}
+}

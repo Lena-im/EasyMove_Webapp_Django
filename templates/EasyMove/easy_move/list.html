@@ -1,0 +1,55 @@
+{% extends "EasyMove/base.html" %}
+{% load static %}
+{% block page-title %}Item list{% endblock %}
+
+
+{% block css-file %}
+    <link rel="stylesheet" href="{% static "css/responsive-home.css" %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div id="itemList">
+
+    <div id="sortTools">
+	    <div id="deliverOptions">
+	    	<input type="checkbox" id="checkDeliver" name="deliver" checked>
+	    	<label for="checkDeliver">Deliver</label>
+	    	<input type="checkbox" id="checkPickup" name="pickup" checked>
+	    	<label for="checkPickup">Pickup</label>
+	    	<input type="checkbox" id="checkMail" name="mail" checked>
+	    	<label for="checkMail">Mail</label>
+	    </div>
+	    <div id="sort">
+	    	<select name="sortBy" id="sortBy" >
+	    		<option value="newest">Newest</option>
+{#	    		<option>Closet</option>#}
+	    		<option value="priceH">Price:H</option>
+	    		<option value="priceL">Price:L</option>
+	    	</select>
+		</div>
+	</div>
+
+    <div id="items">
+        {% if items|length == 0 %}
+            <h2>Sorry, there are no items right now.</h2>
+        {% else %}
+            {% for item in items %}
+                {# iterate items and present in this page #}
+                <a href="{% url "EasyMove:item-detail" item.id %}" class="itemBox" data-created-date="{{ item.date_posted }}">
+    	            <img src="{{ item.item_img.url }}" alt="{{ item.title }}" />
+
+    	            <p class="price" data-item-price="{{ item.price }}">${{ item.price }}</p>
+
+    	            <p class="itemName">{{ item.title}}</p>
+    	            <p class="location">{{ item.location}}</p>
+    	    	    <p class="availability">{{ item.availability}}</p>
+    	        </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
+

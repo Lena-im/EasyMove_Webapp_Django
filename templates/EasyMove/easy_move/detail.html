@@ -1,0 +1,106 @@
+{% extends "EasyMove/base.html" %}
+{%  load static %}
+{% load humanize %}
+
+{% block css-file %}
+    <link rel="stylesheet" href="{% static "css/responsive-item.css" %}">
+{% endblock %}
+
+{# This tempate is for item details #}
+{% block content %}
+        <div id="itemDetail">
+            <div id="itemImageSet">
+				<img src="{{ item.item_img.url}}" alt="image of {{item.title}}" />
+			</div>
+
+
+			<div id="itemInfo">
+				<div id="info">
+					<p class="price">Price: ${{ item.price }}</p>
+					<p class="name">{{ item.title}}</p>
+					<p class="location">{{ item.location }}</p>
+                    <p class="postedBy">Posted by: <a href="{% url "users:profile" item.user.username %}">{{ item.user.username }}</a></p>
+					<p class="avilability">Avilability: {{ item.availability}}</p>
+					<p class="postTime">Posted {{item.date_posted |naturaltime}}</p>
+				</div>
+				<hr/>
+				<div id="condition">
+					<h3>Condition: {{ item.condition}}</h3>
+					<p>{{ item.description }}</p>
+{#                    <p>Key Phrases: {{ key_phrases }} </p>#}
+				</div>
+				<hr/>
+
+                {% if request.session.username %}
+				<div id="operationButtons">
+					<button id="compare" data-item-title="{{ item.title }}" data-ajax-url="{% url "EasyMove:compare-item" item.id%}" data-out-url="{% url "EasyMove:item-detail" item.id %}">Compare</button>
+
+                    {% if request.session.role == "Admin" or request.session.username == item.author %}
+                        <button onclick="location.href = '{% url "EasyMove:edit-item" item.id %}' ">Edit</button>
+                        <button onclick="location.href = '{% url "EasyMove:delete-item" item.id %}'">Delete</button>
+                    {% endif %}
+				</div>
+                {% endif %}
+
+            <div id="compareResult" >
+                <div class="similar_item_link">
+                </div>
+            </div>
+
+
+			</div>
+
+        </div>
+
+
+
+        <div id="itemComment">
+
+        <hr/>
+            <h2>Comments</h2>
+            <div id="all-comments" data-edit-url="{% url "EasyMove:edit-comment" %}" data-delete-url="{% url "EasyMove:delete-comment" %}">
+                {% if comments|length == 0 %}
+                    <p class="no-comment">No comments yet.</p>
+                {% else %}
+                    {% for comment in comments %}
+                        <div class="comment-block">
+                            <hr/>
+                            <p class="title">{{ comment.commentTitle }}</p>
+                            <p class="commentText">{{ comment.commentText}}</p>
+                            <p class="post-time">Posted {{ comment.date_posted|naturaltime }} by <a href="{{  comment.user.details.get_absolute_url }}"> {{ comment.author }}</a> </p>
+                            {% if request.session.role == "Admin" or request.session.username == comment.author %}
+                                <button class="edit-comment">Edit Comment</button>
+                                <button class="submit-edit-comment" data-comment-id="{{ comment.id }}" data-ajax-url="{% url "EasyMove:edit-comment" %}" style="display: none" >Submit Edit</button>
+                                <button class="delete-comment" data-comment-id="{{ comment.id }}" data-ajax-url="{% url "EasyMove:delete-comment" %}">Delete Comment</button>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <hr/>
+
+            {% if request.session.username %}
+            <div id="addComment">
+                <h2>Add Comment</h2>
+
+                    <div class="commentArea">
+                        <label for="commentTitle">Add Title *</label><br/>
+                        <input type="text" id="commentTitle" name="commentTitle" required>
+                    </div>
+
+                    <div class="commentArea">
+                        <label for="comment">Add Your Comment *</label><br/>
+                        <textarea id="comment" name="comment" required></textarea>
+                    </div>
+
+                    <div class="commentArea">
+                        <button id="submitComment" data-item-id="{{ item.id }}" data-ajax-url="{% url "EasyMove:add-comment" %}" data-user-name="{{ request.session.username }}" data-user-url="{% url "users:profile" request.session.username %}">Submit</button>
+                    </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+
+{% endblock %}

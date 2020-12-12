@@ -1,0 +1,34 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+} 
+
+a {
+	text-decoration: none;
+}
+
+ul.messages{
+	font-weight: bold;
+	padding: 1em;
+	margin: 0em;
+	list-style: none;
+}
+
+ul.messages li.success {
+	background-color: lightgreen;
+	padding: 1em;
+	margin: 0em;
+}
+
+ul.messages li.info{
+	background-color: lightblue;
+	padding: 1em;
+	margin: 0em;
+}
+
+ul.messages li.warning{
+	background-color: lightcoral;
+	padding: 1em;
+	margin: 0em;
+}
+
+

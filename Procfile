@@ -1,0 +1,1 @@
+web: gunicorn cs5774DjangoProject.wsgi

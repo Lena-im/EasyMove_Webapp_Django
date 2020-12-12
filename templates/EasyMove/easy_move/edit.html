@@ -1,0 +1,49 @@
+{% extends "EasyMove/base.html" %}
+{% load static %}
+{% load humanize %}
+
+
+{% block css-file %}
+    <link rel="stylesheet" href="{% static "css/responsive-item.css" %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div id="itemDetail">
+            <div id="itemImageSet">
+				<img src="{{ item.item_img.url}}" alt="image of {{item.title}}" />
+			</div>
+
+            <form id="editItem" action="{% url "EasyMove:submit-edit" item.id %}" method="POST">
+            {#submit the editted item using POST method#}
+                {% csrf_token %}
+
+			    	<div id="info">
+			    		<p class="price">Price: $<input type="text" id="add-price" name="add-price" value="{{ item.price }}" required/></p>
+			    		<p class="name">Title: <input type="text" id="add-title" name="add-title" value="{{ item.title }}" required/></p>
+			    		<p class="location">Location: <input type="text" id="add-location" name="add-location" value="{{ item.location }}" required/></p>
+                        <p class="postedBy">Posted by: {{ item.author }}</p>
+			    		<p class="avilability">Avilability: <input type="text" id="add-availability" name="add-availability" value="{{ item.availability }}" required/></p>
+			    		<p class="postTime">Posted {{item.date_posted |naturaltime}}</p>
+			    	</div>
+			    	<hr/>
+			    	<div id="condition">
+			    		<h3>Condition: <input type="text" id="add-condition" name="add-condition" value="{{ item.condition }}" required/></h3>
+			    		<p><textarea id="description" name="description" value="{{ item.description }}"></textarea></p>
+			    	</div>
+			    	<hr/>
+                    <input type="submit" value="Submit Edit">
+{#                    <button onclick="location.href = '{% url "EasyMove:item-detail" item.id %}' ">Cancel</button>#}
+            </form>
+
+
+			<div id="itemLocationMap">
+				<img src="{%  static "img/item/map.png" %}" alt="image of map">
+				<p>Distance: 5 Miles</p>
+			</div>
+    </div>
+
+
+
+{% endblock %}
