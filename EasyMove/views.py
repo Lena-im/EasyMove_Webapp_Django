@@ -107,6 +107,12 @@ def easy_move_add_item(request):
         }
         response = requests.post(endpoint,headers=headers, params=parameters,data=item_img)
         result = response.json()
+
+        if response.status_code != 200 and response.status_code != 201:
+            messages.add_message(request, messages.ERROR,
+                                 "%s" % result["message"])
+            return redirect("EasyMove:add-item")
+
         if result['adult']['isAdultContent']:
             messages.add_message(request, messages.ERROR,
                                  "Your image contains adult content,please change it.")
