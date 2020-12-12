@@ -12,7 +12,7 @@ class EasyMoveItem(models.Model):
     availability = models.CharField(max_length=200)
     condition = models.CharField(max_length=150)
     description = models.TextField(blank=True)
-    item_img = models.ImageField(upload_to='media', blank=False)
+    item_img = models.ImageField(upload_to='', blank=False)
     date_posted = models.DateTimeField(auto_now_add=True)
     author = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
