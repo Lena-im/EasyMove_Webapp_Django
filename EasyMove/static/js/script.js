@@ -571,7 +571,7 @@ $(document).ready(function (){
 
 
     //check querystring
-    checkQueryString();
+    // checkQueryString();
 
     $(document).on('click', '#deleteConfirmation', function(){
         var confirmation = confirm('Are you sure you want to delet this item?')
