@@ -17,7 +17,7 @@
         {% csrf_token %}
         <div>
             <label>Upload item's image</label>
-            <input type="file" name="item_image" id="item_image">
+            <input type="file" name="item_image" id="item_image" required>
         </div>
 
 		<div>
@@ -36,13 +36,19 @@
 		</div>
 
 		<div>
-			<label for="description">Description</label>
+			<label for="description">Description*</label>
             <textarea id="description" name="description" required></textarea>
 		</div>
 
 		<div>
             <label for="add-availability">Shipping Availability*</label>
-			<input type="text" id="add-availability" name="add-availability" required/>
+	    	<input type="checkbox" id="checkDeliver" value="Deliver" name="add-availability">
+	    	<label for="checkDeliver">Deliver</label>
+	    	<input type="checkbox" id="checkPickup" value="Pickup" name="add-availability">
+	    	<label for="checkPickup">Pickup</label>
+	    	<input type="checkbox" id="checkMail" value="Mail" name="add-availability">
+	    	<label for="checkMail">Mail</label>
+
 		</div>
 
 		<div>

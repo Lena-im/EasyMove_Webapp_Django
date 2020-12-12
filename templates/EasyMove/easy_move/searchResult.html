@@ -15,7 +15,7 @@
                 {# iterate items and present in this page #}
                 <div id="resultItems">
                     <a href="{% url "EasyMove:item-detail" item.id %}" class="itemBox" data-created-date="{{ item.date_posted }}">
-    	                <img src="{{ item.imgURL }}" alt="{{ item.title }}" />
+    	                <img src="{{ item.item_img.url }}" alt="{{ item.title }}" />
                     
     	                <p class="price" data-item-price="{{ item.price }}">${{ item.price }}</p>
                     

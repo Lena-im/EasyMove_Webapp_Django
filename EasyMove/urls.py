@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete-comment', views.delete_comment, name="delete-comment"),
     path('edit-comment', views.edit_comment, name="edit-comment"),
     path('items/change-role', views.update_user_role, name="change-role"),
+    path('search', views.item_search, name="item-search"),
 ]

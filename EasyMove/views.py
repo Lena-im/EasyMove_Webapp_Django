@@ -47,36 +47,6 @@ def easy_move_list(request):
 def easy_move_items_detail(request, item_id):
     item = EasyMoveItem.objects.get(id=item_id)
     comments = Comment.objects.filter(item_id=item_id).order_by('-date_posted')
-
-    # Text analytic -- key phrase extraction
-    # endpoint="https://easymovetext.cognitiveservices.azure.com/text/analytics/v3.0/keyPhrases"
-    # headers = {
-    #     'Content-Type': 'application/json',
-    #     'Ocp-Apim-Subscription-Key': '1694bfef50e3440b97cc8ff4f3dd7732',
-    # }
-    # body = {
-    #     "documents":[
-    #         {
-    #             "language":"en",
-    #             "id":item_id,
-    #             "text":json.dumps(item.description)
-    #         }
-    #     ]
-    # }
-    # response = requests.post(endpoint, headers=headers, data=body)
-    # response_json = response.json()
-    # key_phrases = response_json
-    # # if attract key phrase successfully, shows up
-    # if key_phrases:
-    #     return render(request,
-    #                   "EasyMove/easy_move/detail.html",
-    #                   {"item": item, "comments": comments,"key_phrases":key_phrases},
-    #                   )
-    # else:
-    #     return render(request,
-    #                   "EasyMove/easy_move/detail.html",
-    #                   {"item": item, "comments": comments},
-    #                   )
     return render(request,
                   "EasyMove/easy_move/detail.html",
                   {"item": item, "comments": comments},
@@ -95,9 +65,37 @@ def easy_move_add_item(request):
         price = request.POST.get("add-price")
         condition = request.POST.get("add-condition")
         description = request.POST.get("description")
-        availability = request.POST.get("add-availability")
+        availability = request.POST.getlist("add-availability")
         location = request.POST.get("add-location")
         item_img = request.FILES["item_image"]
+
+        if title.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The title is invalid/empty, please try again.")
+            return redirect("EasyMove:add-item")
+
+        if condition.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The condition is invalid/empty, please try again.")
+            return redirect("EasyMove:add-item")
+
+        if description.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The description is invalid/empty, please try again.")
+            return redirect("EasyMove:add-item")
+
+        if location.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The location is invalid/empty, please try again.")
+            return redirect("EasyMove:add-item")
+
+
+        option = '/'.join(availability)
+        if option == '':
+            messages.add_message(request, messages.ERROR,
+                                 "Please select at least one availability option.")
+            return redirect("EasyMove:add-item")
+
 
         endpoint = "https://easymovevision.cognitiveservices.azure.com/vision/v3.1/analyze"
         parameters = {
@@ -131,7 +129,7 @@ def easy_move_add_item(request):
             price = price,
             condition = condition,
             description = description,
-            availability = availability,
+            availability = option,
             location = location,
             author=request.session.get('username'),
             user=user,
@@ -183,15 +181,41 @@ def easy_move_submit_edit(request, item_id):
         price = request.POST.get("add-price")
         condition = request.POST.get("add-condition")
         description = request.POST.get("description")
-        availability = request.POST.get("add-availability")
+        availability = request.POST.getlist("add-availability")
         location = request.POST.get("add-location")
+
+        if title.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The title is invalid/empty, please try again.")
+            return redirect("EasyMove:edit-item", item_id)
+
+        if condition.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The condition is invalid/empty, please try again.")
+            return redirect("EasyMove:edit-item", item_id)
+
+        if description.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The description is invalid/empty, please try again.")
+            return redirect("EasyMove:edit-item", item_id)
+
+        if location.strip() == '':
+            messages.add_message(request, messages.ERROR,
+                                 "The location is invalid/empty, please try again.")
+            return redirect("EasyMove:edit-item", item_id)
+
+        option = '/'.join(availability)
+        if option == '':
+            messages.add_message(request, messages.ERROR,
+                                 "Please select at least one availability option.")
+            return redirect("EasyMove:edit-item", item_id)
 
         # update information
         editing_item.title = title
         editing_item.price = price
         editing_item.condition = condition
         editing_item.description = description
-        editing_item.availability = availability
+        editing_item.availability = option
         editing_item.location = location
 
         # save update
@@ -394,11 +418,23 @@ def edit_comment(request):
         )
         action.save()
 
-
-
         return JsonResponse({'success': 'success'}, status=200)
     else:
         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
+
+
+def item_search(request):
+    if request.method == 'GET':
+        search_query = request.GET['search']
+
+    search_results = EasyMoveItem.objects.filter(title__icontains=search_query)
+
+    return render(request,
+                  "EasyMove/easy_move/searchResult.html",
+                  {"items": search_results}
+                  )
+
+
 
 
 

@@ -42,13 +42,13 @@
 
 			<!-- Mid-header include search box and navigation bar -->
 			<div id="midHeader">
-					<form id="searchForm" action="SearchResults.html" method="get">
+					<form id="searchForm" action="{% url "EasyMove:item-search" %}" method="GET">
 						<input type="text" id="searchBar" name="search" placeholder="Jellycat">
 						<input type="image" name="submit" src="{% static "img/site/search-icon.png" %}">
 					</form>
 			</div>
 
-			<!-- Right header include link to user profile and message interface -->
+			<!-- Right header include link to userprofile and message interface -->
 			<div id="rightHeader">
 
                 {% if request.session.username %}

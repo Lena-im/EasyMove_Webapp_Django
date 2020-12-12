@@ -603,6 +603,12 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 
+/*
+    Search function using js
+    This function has been replaced to retrieving items using MySQL query
+ */
+
+/*
 function checkQueryString(){
     var querystring = window.location.search;
     var urlRarams = new URLSearchParams(querystring);
@@ -618,5 +624,7 @@ function checkQueryString(){
     }
 
 }
+ */
+
 
 
