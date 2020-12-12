@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'x4*j3)9k&0!)20_im+2i4i)s(p$y&c78@rr3$iqo98f_m@5_j%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# if 'DATABASE_URL' in os.environ:
-#     DEBUG = False
-# else:
-DEBUG = True
+if 'DATABASE_URL' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 
 ALLOWED_HOSTS = ['cs5774final.herokuapp.com','127.0.0.1']
