@@ -10,11 +10,13 @@ import json
 
 # Create your views here.
 
+# Home view
 def home(request):
     items = EasyMoveItem.objects.all().order_by('-date_posted')
     if request.session.get("username", False):
         user = User.objects.get(username=request.session.get("username"))
 
+        # filter the feeds that are related to the current user
         user_upload = EasyMoveItem.objects.all().filter(user_id=user.id)
         actions_user = Action.objects.all().filter(user_id=user.id)
         actions_target_user = Action.objects.all().filter(target_id=user.id,target_ct=ContentType.objects.get_for_model(User))
@@ -33,7 +35,7 @@ def home(request):
                       {"items": items}
                       )
 
-
+# List view
 def easy_move_list(request):
     items = EasyMoveItem.objects.all().order_by('-date_posted')
     actions = Action.objects.all()
@@ -42,8 +44,7 @@ def easy_move_list(request):
               {"items": items, "actions":actions}
               )
 
-
-
+# Item deatils view
 def easy_move_items_detail(request, item_id):
     item = EasyMoveItem.objects.get(id=item_id)
     comments = Comment.objects.filter(item_id=item_id).order_by('-date_posted')
@@ -53,7 +54,7 @@ def easy_move_items_detail(request, item_id):
                   )
 
 
-
+# Sell/add new item view
 def easy_move_add_item(request):
     # redirect if not logged in
     if not request.session.get("username", False):
@@ -69,6 +70,8 @@ def easy_move_add_item(request):
         location = request.POST.get("add-location")
         item_img = request.FILES["item_image"]
 
+        # check the from content.
+        # check if the content are only space.
         if title.strip() == '':
             messages.add_message(request, messages.ERROR,
                                  "The title is invalid/empty, please try again.")
@@ -89,14 +92,14 @@ def easy_move_add_item(request):
                                  "The location is invalid/empty, please try again.")
             return redirect("EasyMove:add-item")
 
-
+        # get the value of checkbox and re-construct them
         option = '/'.join(availability)
         if option == '':
             messages.add_message(request, messages.ERROR,
                                  "Please select at least one availability option.")
             return redirect("EasyMove:add-item")
 
-
+        # Detect the content of image using Microsoft Azure Computer Vision AI Service
         endpoint = "https://easymovevision.cognitiveservices.azure.com/vision/v3.1/analyze"
         parameters = {
             'visualFeatures':'Adult'
@@ -108,11 +111,13 @@ def easy_move_add_item(request):
         response = requests.post(endpoint,headers=headers, params=parameters,data=item_img)
         result = response.json()
 
+        # Handle API error message.
         if response.status_code != 200 and response.status_code != 201:
             messages.add_message(request, messages.ERROR,
                                  "%s" % result["message"])
             return redirect("EasyMove:add-item")
 
+        # warn user with corresponding error
         if result['adult']['isAdultContent']:
             messages.add_message(request, messages.ERROR,
                                  "Your image contains adult content,please change it.")
@@ -163,7 +168,6 @@ def easy_move_add_item(request):
                       )
 
 
-
 def easy_move_edit_item(request, item_id):
     editing_item = EasyMoveItem.objects.get(id=item_id)
 
@@ -173,6 +177,7 @@ def easy_move_edit_item(request, item_id):
                   )
 
 
+# Edit item view
 def easy_move_submit_edit(request, item_id):
 
     if not request.session.get("username", False):
@@ -190,6 +195,7 @@ def easy_move_submit_edit(request, item_id):
         availability = request.POST.getlist("add-availability")
         location = request.POST.get("add-location")
 
+        # Check if the submit content are valid.
         if title.strip() == '':
             messages.add_message(request, messages.ERROR,
                                  "The title is invalid/empty, please try again.")
@@ -268,6 +274,7 @@ def easy_move_change_location(request):
             user = User.objects.get(username=request.session.get('username'))
             user.location = request.POST.get('new_location')
             user.save()
+            # update user location
             return JsonResponse({'success':'success', 'new_location':user.location}, status=200)
 
         except UserInfo.DoesNotExist:
@@ -278,6 +285,8 @@ def easy_move_change_location(request):
 
 
 
+# Compare if there is a similar item in the database as the current one
+# compare their price if the web has the similar item.
 def easy_move_item_compare(request, item_id):
     if not request.session.get("username", False):
         return redirect('EasyMove:easy-move-home')
@@ -287,6 +296,7 @@ def easy_move_item_compare(request, item_id):
     if is_ajax and request.method == "POST":
         item_title = request.POST.get('item_title')
         try:
+            # find the item with similar title from database
             similar_item = EasyMoveItem.objects.exclude(pk=item_id).filter(title__icontains=item_title)
             if similar_item:
                 similar_item = similar_item[0]
@@ -316,6 +326,7 @@ def new_comment_add(request):
         item_id = request.POST.get('item_id')
         user = User.objects.get(username=request.session.get("username"))
 
+        # Check the content of the submitted form.
         if commentTitle =='':
             return JsonResponse({'error': 'Comment title is required.'}, status=200)
         elif commentText =='':
@@ -352,6 +363,7 @@ def new_comment_add(request):
         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
 
 
+# Only admin could change other user's role
 def update_user_role(request):
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
@@ -361,9 +373,10 @@ def update_user_role(request):
         new_role = request.POST.get('new_role')
         user.details.role = new_role
         user.save()
+
+        # If the admin changed himself/herself'r role, then change the session's role
         if(username == request.session.get("username")):
             request.session['role'] = user.details.role
-        print(request.session['role'])
 
         action_user = User.objects.get(username=request.session.get("username"))
         # log the action
@@ -374,10 +387,10 @@ def update_user_role(request):
         )
         action.save()
 
-
         return JsonResponse({'success':'success','currentRole':request.session['role']},status=200)
     else:
         return JsonResponse({'error':'Invalid Ajax request'}, status=400)
+
 
 def delete_comment(request):
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
@@ -402,6 +415,7 @@ def delete_comment(request):
         return JsonResponse({'success': 'success',"comment_length":comment_length}, status=200)
     else:
         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
+
 
 def edit_comment(request):
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
@@ -429,10 +443,12 @@ def edit_comment(request):
         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
 
 
+# search item from database using search query
 def item_search(request):
     if request.method == 'GET':
         search_query = request.GET['search']
 
+    # search results contains a list of item that
     search_results = EasyMoveItem.objects.filter(title__icontains=search_query)
 
     return render(request,

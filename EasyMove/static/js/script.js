@@ -179,6 +179,7 @@ $(document).ready(function (){
           // Code to run if the request succeeds (is done);
           // The response is passed to the function
           .done(function( json ) {
+              //create new comment
               if(json.success === 'success') {
                   var added_comment = $('<div class="comment-block"><hr/>\n <p class="title">' + title + '</p>\n' +
                       '  <p class="commentText">' + comment + '</p>\n' +
@@ -189,6 +190,7 @@ $(document).ready(function (){
                   if(json.comment_length === 1){
                       $('.no-comment').hide()
                   }
+                  //insert the comment in the beginning of the comments list
                   $(added_comment).prependTo($('#all-comments'));
 
                   $('#commentTitle').val('')
@@ -322,6 +324,7 @@ $(document).ready(function (){
               if(json.success === 'success') {
                 $(this).siblings().remove()
                 if(json.comment_length === 0){
+                    //if there is no comment in database
                     $('.no-comment').show()
                 }
                 $(this).parent('.comment-block').remove()
@@ -402,6 +405,7 @@ $(document).ready(function (){
           // The response is passed to the function
           .done(function( json ) {
               if(json.success === 'success') {
+                  //replace with updated content
                   $(this).siblings('.update-comment-title').replaceWith('<p class="title">'+ updated_title +'</p>')
                   $(this).siblings('.update-comment-content').replaceWith('<p class="commentText">'+ updated_content +'</p>')
                   $(this).siblings('.edit-comment').show()
@@ -427,7 +431,9 @@ $(document).ready(function (){
 
 
 
-
+    /*
+        Sort the item based on the price and publish time.
+     */
 
     $("#sortBy").on('change', function (){
         var sortOption = $(this).val();
